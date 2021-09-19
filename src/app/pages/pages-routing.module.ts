@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SecurityComponent } from './security/security.component';
+import { SecurityComponent } from '../core/layout/security/security.component';
 
 const routes: Routes = [
   {
@@ -11,8 +11,8 @@ const routes: Routes = [
   {
     path: '', component: SecurityComponent,
     children: [
-      { path: 'login', loadChildren: () => import('../../pages/login/login.module').then(m => m.LoginModule) },
-      { path: 'admin-login', loadChildren: () => import('../../pages/admin-login/admin-login.module').then(m => m.AdminLoginModule) }
+      { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
+      { path: 'admin-login', loadChildren: () => import('./admin-login/admin-login.module').then(m => m.AdminLoginModule) }
     ]
   }
 ];
@@ -21,4 +21,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class LayoutRoutingModule { }
+export class PagesRoutingModule { }

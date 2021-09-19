@@ -13,7 +13,9 @@ import { LayoutModule } from './layout/layout.module'
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
-    LayoutModule,
   ],
+  exports: [
+    LayoutModule,
+  ]
 })
 export class CoreModule { }
