@@ -11,8 +11,8 @@ const routes: Routes = [
   {
     path: '', component: SecurityComponent,
     children: [
-      { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
-      { path: 'admin-login', loadChildren: () => import('./admin-login/admin-login.module').then(m => m.AdminLoginModule) }
+      { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule), data: {title: 'Login'} },
+      { path: 'admin-login', loadChildren: () => import('./admin-login/admin-login.module').then(m => m.AdminLoginModule), data: {title: 'Admin Login'} }
     ]
   }
 ];
