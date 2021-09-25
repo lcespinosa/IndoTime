@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-security',
   templateUrl: './security.component.html',
   styleUrls: ['./security.component.scss']
 })
-export class SecurityComponent implements OnInit {
+export class SecurityComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
