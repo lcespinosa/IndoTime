@@ -1,37 +1,67 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { TranslateService } from '@ngx-translate/core';
+import { merge } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 
+import { environment } from '@env/environment';
+import { Logger, UntilDestroy, untilDestroyed } from '@shared';
+import { I18nService } from '@app/i18n';
+
+const log = new Logger('App');
+
+@UntilDestroy()
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
-  constructor(private router: Router,
+export class AppComponent implements OnInit, OnDestroy {
+  constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
-    private titleService: Title) { }
+    private titleService: Title,
+    private translateService: TranslateService,
+    private i18nService: I18nService
+  ) {}
 
   ngOnInit() {
-    this.router.events.pipe(
-        filter(event => event instanceof NavigationEnd),
-      ).subscribe(() => {
-        const route = this.getChild(this.activatedRoute);
-        route.data.subscribe((data: { title: string; }) => {
-          let fullTitle = data.title.length > 0
-            ? `${data.title} | ${environment.app_name}`
-            : environment.app_name;
-          this.titleService.setTitle(fullTitle)});
+    // Setup logger
+    if (environment.production) {
+      Logger.enableProductionMode();
+    }
+
+    log.debug('init');
+
+    // Setup translations
+    this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
+
+    const onNavigationEnd = this.router.events.pipe(filter((event) => event instanceof NavigationEnd));
+
+    // Change page title on navigation or language change, based on route data
+    merge(this.translateService.onLangChange, onNavigationEnd)
+      .pipe(
+        map(() => {
+          let route = this.activatedRoute;
+          while (route.firstChild) {
+            route = route.firstChild;
+          }
+          return route;
+        }),
+        filter((route) => route.outlet === 'primary'),
+        switchMap((route) => route.data),
+        untilDestroyed(this)
+      )
+      .subscribe((event) => {
+        const title = event.title;
+        if (title) {
+          this.titleService.setTitle(this.translateService.instant(title));
+        }
       });
   }
 
-  getChild(activatedRoute: ActivatedRoute): any {
-    if (activatedRoute.firstChild) {
-      return this.getChild(activatedRoute.firstChild);
-    } else {
-      return activatedRoute;
-    }
+  ngOnDestroy() {
+    this.i18nService.destroy();
   }
 }
