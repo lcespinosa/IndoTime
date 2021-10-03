@@ -3,15 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SecurityComponent } from './security.component';
 
-
-
 @NgModule({
-  declarations: [
-    SecurityComponent
-  ],
-  imports: [
-    CommonModule,
-    RouterModule
-  ]
+  declarations: [SecurityComponent],
+  imports: [CommonModule, RouterModule],
 })
-export class SecurityModule { }
+export class SecurityModule {}

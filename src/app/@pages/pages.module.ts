@@ -4,6 +4,6 @@ import { PagesRoutingModule } from './pages-routing.module';
 
 @NgModule({
   declarations: [],
-  imports: [PagesRoutingModule]
+  imports: [PagesRoutingModule],
 })
-export class PagesModule { }
+export class PagesModule {}

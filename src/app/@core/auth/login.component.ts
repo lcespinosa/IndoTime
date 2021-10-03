@@ -34,8 +34,7 @@ export class LoginComponent implements OnInit {
 
   getDigitButtonClasses(): object {
     return {
-      'inline-flex justify-center py-3 px-6 border border-gray-300 rounded-md shadow-sm bg-white':
-        true,
+      'inline-flex justify-center py-3 px-6 border border-gray-300 rounded-md shadow-sm bg-white': true,
       'text-sm font-medium text-gray-500 hover:bg-gray-50 cursor-pointer': true,
     };
   }
@@ -54,10 +53,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (credentials) => {
           log.debug(`${credentials.username} successfully logged in`);
-          this.router.navigate(
-            [this.route.snapshot.queryParams.redirect || '/'],
-            { replaceUrl: true }
-          );
+          this.router.navigate([this.route.snapshot.queryParams.redirect || '/'], { replaceUrl: true });
         },
         (error) => {
           log.debug(`Login error: ${error}`);

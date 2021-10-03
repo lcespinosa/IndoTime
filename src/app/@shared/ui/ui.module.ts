@@ -6,25 +6,9 @@ import { LabelComponent } from './label/label.component';
 import { InputComponent } from './input/input.component';
 import { CheckboxComponent } from './checkbox/checkbox.component';
 
-
-
 @NgModule({
-  declarations: [
-    ButtonComponent,
-    TitleComponent,
-    LabelComponent,
-    InputComponent,
-    CheckboxComponent
-  ],
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    ButtonComponent,
-    TitleComponent,
-    LabelComponent,
-    InputComponent,
-    CheckboxComponent,
-  ]
+  declarations: [ButtonComponent, TitleComponent, LabelComponent, InputComponent, CheckboxComponent],
+  imports: [CommonModule],
+  exports: [ButtonComponent, TitleComponent, LabelComponent, InputComponent, CheckboxComponent],
 })
-export class UiModule { }
+export class UiModule {}

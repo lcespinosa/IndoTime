@@ -3,13 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { SecurityModule } from './security/security.module';
 
-
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule
-  ],
-  exports: [SecurityModule]
+  imports: [CommonModule],
+  exports: [SecurityModule],
 })
-export class LayoutModule { }
+export class LayoutModule {}
