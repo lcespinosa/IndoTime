@@ -26,8 +26,15 @@
     "baseUrl": "./",
     "paths": {
       "@app/*": ["src/app/*"],
+      "@core": ["src/app/@core"],
+      "@core/*": ["src/app/@core/*"],
       "@shared": ["src/app/@shared"],
       "@shared/*": ["src/app/@shared/*"],
+      "@layout": ["src/app/@layout"],
+      "@layout/*": ["src/app/@layout/*"],
+      "@pages": ["src/app/@pages"],
+      "@pages/*": ["src/app/@pages/*"],
+      "@translations/*": ["src/translations/*"],
       "@env/*": ["src/environments/*"]
     }
   },
