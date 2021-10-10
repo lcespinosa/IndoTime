@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-import { PagesRoutingModule } from './pages-routing.module';
+import { SharedModule } from '@shared'
+
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [],
-  imports: [PagesRoutingModule],
+  imports: [CommonModule, SharedModule],
+  exports: [AdminModule],
 })
 export class PagesModule {}
