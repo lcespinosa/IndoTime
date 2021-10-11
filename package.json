@@ -32,6 +32,7 @@
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@ng-icons/core": "^12.0.1",
     "@ng-icons/heroicons": "^12.0.1",
+    "@ng-select/ng-select": "^7.3.0",
     "@ngx-translate/core": "^13.0.0",
     "@tailwindcss/forms": "^0.3.4",
     "rxjs": "^6.6.3",

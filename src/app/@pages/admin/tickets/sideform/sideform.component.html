@@ -1,0 +1,139 @@
+<div *ngIf="formOpen" class="fixed inset-0 overflow-hidden bg-gray-400 bg-opacity-75" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+  <div class="absolute inset-0 overflow-hidden">
+    <!-- Background overlay, show/hide based on slide-over state. -->
+    <div class="absolute inset-0" aria-hidden="true">
+      <div class="fixed inset-y-0 right-0 flex max-w-full pl-16">
+        <!--
+          Slide-over panel, show/hide based on slide-over state.
+
+          Entering: "transform transition ease-in-out duration-500 sm:duration-700"
+            From: "translate-x-full"
+            To: "translate-x-0"
+          Leaving: "transform transition ease-in-out duration-500 sm:duration-700"
+            From: "translate-x-0"
+            To: "translate-x-full"
+        -->
+        <div class="w-screen max-w-md">
+          <form class="flex flex-col h-full bg-white divide-y divide-gray-200 shadow-xl" (ngSubmit)="onSubmit()" [formGroup]="ticketForm">
+            <div class="flex-1 h-0 overflow-y-auto">
+              <div class="px-4 py-6 bg-indigo-700 sm:px-6">
+                <div class="flex items-center justify-between">
+                  <h2 class="text-lg font-medium text-white" id="slide-over-title">
+                    New ticket
+                  </h2>
+                  <div class="flex items-center ml-3 h-7">
+                    <button type="button" (click)="onCloseForm()" class="text-indigo-200 bg-indigo-700 rounded-md hover:text-white focus:outline-none focus:ring-2 focus:ring-white">
+                      <span class="sr-only">Close panel</span>
+                      <ng-icon name="hero-x" class="w-6 h-6"></ng-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-col justify-between flex-1">
+                <div class="px-4 divide-y divide-gray-200 sm:px-6">
+                  <div class="pt-6 pb-5 space-y-6">
+                    <div>
+                      <label for="ticket_code" class="block text-sm font-medium text-gray-900">
+                        Ticket code
+                      </label>
+                      <div class="mt-1">
+                        <input formControlName="ticket_code" type="text" name="ticket_code" id="ticket_code" placeholder="Ex: TI-xxxx" class="block w-full uppercase border-gray-300 rounded-md shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        <div *ngIf="code?.invalid && (code?.dirty || code?.touched)"
+                          class="alert alert-danger">
+
+                        <div *ngIf="code?.errors?.required" class="mt-1 text-red-500">
+                          Code is required.
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                    <div>
+                      <label for="ticket_title" class="block text-sm font-medium text-gray-900">
+                        Ticket title
+                      </label>
+                      <div class="mt-1">
+                        <input formControlName="ticket_title" type="text" name="ticket_title" id="ticket_title" class="block w-full border-gray-300 rounded-md shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        <div *ngIf="title?.invalid && (title?.dirty || title?.touched)"
+                          class="alert alert-danger">
+
+                          <div *ngIf="title?.errors?.required" class="mt-1 text-red-500">
+                            Title is required.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <label for="description" class="block text-sm font-medium text-gray-900">
+                        Description
+                      </label>
+                      <div class="mt-1">
+                        <textarea id="description" formControlName="description" name="description" rows="4" class="block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                      </div>
+                    </div>
+                    <div>
+                      <label for="estimated_hours" class="block text-sm font-medium text-gray-900">
+                        Estimated hours
+                      </label>
+                      <div class="mt-1">
+                        <input type="number" formControlName="estimated_hours" name="estimated_hours" id="estimated_hours" min="1" class="block w-full border-gray-300 rounded-md shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        <div *ngIf="estimatedHours?.invalid && (estimatedHours?.dirty || estimatedHours?.touched)"
+                          class="alert alert-danger">
+
+                          <div *ngIf="estimatedHours?.errors?.required" class="mt-1 text-red-500">
+                            Estimated hours is required.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="mt-2">
+                        <label id="listbox-label" for="assigned_employee" class="block text-sm font-medium text-gray-700">
+                          Assigned to
+                        </label>
+
+                        <ng-select formControlName="assigned_employee" [items]="employees" name="assigned_employee" bindLabel="name" bindValue="name" class="mt-2 rounded-md shadow-sm cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ng-select">
+                          <ng-template ng-label-tmp let-item="item">
+                            <span class="flex items-center">
+                              <img [src]="item.avatar" alt="" class="flex-shrink-0 w-6 h-6 rounded-full">
+                              <span class="block ml-3 truncate">
+                                {{item.name}}
+                              </span>
+                            </span>
+                          </ng-template>
+                          <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                            <span class="flex items-center">
+                              <img [src]="item.avatar" alt="" class="flex-shrink-0 w-6 h-6 rounded-full">
+                              <span class="block ml-3 truncate">
+                                {{item.name}}
+                              </span>
+                            </span>
+                          </ng-template>
+                        </ng-select>
+
+                        <div *ngIf="employee?.invalid && (employee?.dirty || employee?.touched)"
+                          class="alert alert-danger">
+
+                          <div *ngIf="employee?.errors?.required" class="mt-1 text-red-500">
+                            Assigned employee is required.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-end flex-shrink-0 px-4 py-4">
+              <button type="button" (click)="onCloseForm()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                Cancel
+              </button>
+              <button type="submit" [disabled]="!ticketForm.valid" [ngClass]="{'inline-flex justify-center px-4 py-2 ml-4 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500': true}">
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

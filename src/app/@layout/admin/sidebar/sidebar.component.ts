@@ -17,12 +17,12 @@ interface NavigationItem {
 })
 export class SidebarComponent implements OnInit {
   navigationItems: NavigationItem[] = [
-    {
-      title: marker('Dashboard'),
-      href: GlobalConstants.SITE_MAP.DASHBOARD,
-      icon: 'hero-home',
-      active: true,
-    },
+    // {
+    //   title: marker('Dashboard'),
+    //   href: GlobalConstants.SITE_MAP.DASHBOARD,
+    //   icon: 'hero-home',
+    //   active: true,
+    // },
     {
       title: marker('Tickets'),
       href: GlobalConstants.SITE_MAP.TICKETS,

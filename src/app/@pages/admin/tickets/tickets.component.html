@@ -1,15 +1,22 @@
 <!-- 2 column wrapper -->
-<div class="flex-grow w-full lg:flex">
+<div class="flex-grow w-full h-screen lg:flex">
   <div class="flex-1 min-w-0 bg-white xl:flex">
     <!-- Projects List -->
     <div class="bg-white lg:min-w-0 lg:flex-1">
       <div class="pt-4 pb-4 pl-4 pr-6 border-t border-b border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
         <div class="flex items-center">
           <h1 class="flex-1 text-lg font-medium">Tickets</h1>
+
+          <div>
+            <button type="button" (click)="onAddTicketClick($event)" class="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="sort-menu-button" aria-expanded="false" aria-haspopup="true">
+              <ng-icon name="hero-plus" class="w-8 h-8 mr-3 text-gray-400 "></ng-icon>
+              New ticket
+            </button>
+          </div>
         </div>
       </div>
       <ul role="list" class="relative z-0 border-b border-gray-200 divide-y divide-gray-200">
-        <li *ngFor="let ticket of tickets" class="relative py-5 pl-4 pr-6 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
+        <li *ngFor="let ticket of tickets" [attr.data-key]="ticket.code" (click)="onTicketClick($event)" [ngClass]="{'relative py-5 pl-4 pr-6 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6 cursor-pointer': true, 'bg-gray-50': ticket.code === selectedTicket?.code}">
           <div class="flex items-center justify-between space-x-4">
             <!-- Repo name and link -->
             <div class="min-w-0 space-y-3">
@@ -20,19 +27,19 @@
 
                 <span class="block">
                   <h2 class="text-sm font-medium">
-                    <a href="#">
+                    <span>
                       <span class="absolute inset-0" aria-hidden="true"></span>
                       {{ticket.code}}-{{ticket.title}} <span class="sr-only">{{ticket.status | uppercase}}</span>
-                    </a>
+                    </span>
                   </h2>
                 </span>
               </div>
-              <a href="#" class="relative group flex items-center space-x-2.5">
+              <span class="relative group flex items-center space-x-2.5">
                 <ng-icon name="hero-ticket" class="flex-shrink-0 w-6 h-6 mr-4 text-indigo-300"></ng-icon>
                 <span class="text-sm font-medium text-gray-500 truncate group-hover:text-gray-900">
                   {{ticket.description}}
                 </span>
-              </a>
+              </span>
             </div>
             <div class="sm:hidden">
               <!-- Heroicon name: solid/chevron-right -->
@@ -68,27 +75,32 @@
   <div class="pl-6 lg:w-80">
     <div class="pt-6 pb-2">
       <h2 class="text-sm font-semibold">Activity</h2>
+      <h4 class="text-xs font-semibold">Select one ticket to see last activity</h4>
     </div>
     <div>
       <ul role="list" class="divide-y divide-gray-200">
-        <li class="py-4">
+        <li class="py-4" *ngFor="let activity of activities">
           <div class="flex space-x-3">
-            <img class="w-6 h-6 rounded-full" src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=256&h=256&q=80" alt="">
             <div class="flex-1 space-y-1">
               <div class="flex items-center justify-between">
-                <h3 class="text-sm font-medium">You</h3>
-                <p class="text-sm text-gray-500">1h</p>
+                <span *ngIf="activity.type === 'checkin'; else elseType" class="inline-flex items-center">
+                  <ng-icon name="hero-login" class="w-6 h-6 mr-2"></ng-icon>
+                  Checkin mark
+                </span>
+                <ng-template #elseType>
+                  <span class="inline-flex items-center">
+                    <ng-icon name="hero-logout" class="w-6 h-6 mr-2"></ng-icon>
+                    Checkout mark
+                  </span>
+                </ng-template>
+                <p class="text-sm text-gray-500">{{activity.date | date:'short' }}</p>
               </div>
-              <p class="text-sm text-gray-500">Deployed Workcation (2d89f0c8 in master) to production</p>
             </div>
           </div>
         </li>
-
-        <!-- More items... -->
       </ul>
-      <div class="py-4 text-sm border-t border-gray-200">
-        <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-900">View all activity <span aria-hidden="true">&rarr;</span></a>
-      </div>
     </div>
   </div>
+
+  <app-ticket-form [formOpen]="formOpen" (formClose)="onCloseForm()" (formSubmit)="onSubmit($event)"></app-ticket-form>
 </div>
